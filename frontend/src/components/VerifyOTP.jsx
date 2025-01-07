@@ -41,7 +41,7 @@ const VerifyOTP = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/verify-otp', { userId, otp });
+      const res = await axios.post('http://${process.env.ip}:5000/api/auth/verify-otp', { userId, otp });
       alert(res.data.message);
       navigate('/signin'); // Redirect to login page
     } catch (error) {
@@ -58,7 +58,7 @@ const VerifyOTP = () => {
     setOtpExpiry(Date.now() + 120000); // Update expiry time to 2 minutes from now
     setMessage(''); // Clear any previous messages
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/resend-otp', { userId });
+      const res = await axios.post('http://${process.env.ip}:5000/api/auth/resend-otp', { userId });
       setMessage(res.data.message);
     } catch (error) {
       console.error('Resend OTP Error:', error);
