@@ -31,15 +31,15 @@ function App() {
           <div style={appStyle}>
             <Header />
             <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/services" element={<PricingBox />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/verify-otp/:userId" element={<VerifyOTP />} />
+              <Route exact path="/" element={<LandingPage />} />
+              <Route exact path="/about" element={<About />} />
+              <Route exact path="/services" element={<PricingBox />} />
+              <Route exact path="/contact" element={<Contact />} />
+              <Route exact path="/signin" element={<SignIn />} />
+              <Route exact path="/signup" element={<SignUp />} />
+              <Route exact path="/verify-otp/:userId" element={<VerifyOTP />} />
               {/* Protected Route */}
-              <Route path="/welcome" element={<ProtectedRoute element={<WelcomePage />} />} />
+              <Route exact path="/welcome" element={<ProtectedRoute element={<WelcomePage />} />} />
             </Routes>
             <Footer />
           </div>

@@ -24,13 +24,13 @@ export const SignIn = () => {
       return;
   }
     try {
-      const res = await axios.post('http://${process.env.ip}:5000/api/auth/login', {
+      const res = await axios.post(`http://3.110.179.216:5000/api/auth/login`, {
         email,
         password,
       });
 
       // Successful login
-      alert(res.data.message);
+      alert(res.data.token);
       // Optionally save the token to local storage or state
       localStorage.setItem('token', res.data.token); // Save token to local storage
       login(res.data.token); // Call after successful login

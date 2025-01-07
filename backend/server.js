@@ -18,7 +18,7 @@ const app = express();
 
 // Middleware setup
 app.use(cors({
-  origin: 'http://${process.env.ip}:3000',
+  origin: `http://3.110.179.216:3000`,
   credentials: true,
 }));
 

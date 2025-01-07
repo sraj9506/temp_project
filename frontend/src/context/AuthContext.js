@@ -13,7 +13,6 @@ export const AuthProvider = ({ children }) => {
   const [initialValidation, setInitialValidation] = useState(false); // Add initial validation flag
 
   const login = useCallback((token) => {
-    localStorage.setItem('authToken', token);
     setToken(token);
   }, []);
 
@@ -34,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      const response = await axios.get('http://localhost:5000/api/auth/validate', {
+      const response = await axios.get('http://3.110.179.216:5000/api/auth/validate', {
         headers: { Authorization: `Bearer ${token}` },
       });
 
