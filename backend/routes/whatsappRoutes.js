@@ -127,13 +127,12 @@ const fetchDataFromExcel = (clientId, mobile, birthdate) => {
     if (!fs.existsSync(filePath)) {
         throw new Error('Excel file not found');
     }
- 
     const workbook = xlsx.readFile(filePath);
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
     const data = xlsx.utils.sheet_to_json(worksheet);
  
-    return data.filter(row => row.MobileNumber === mobile && row.Birthdate === birthdate);
+   return data.filter(row =>row.MobileNumber === mobile && row.Birthdate === birthdate);
 };
  
 const formatData = (data) => {
