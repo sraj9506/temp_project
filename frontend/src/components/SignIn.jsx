@@ -24,7 +24,7 @@ export const SignIn = () => {
       return;
   }
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', {
+      const res = await axios.post('http://${process.env.ip}:5000/api/auth/login', {
         email,
         password,
       });
