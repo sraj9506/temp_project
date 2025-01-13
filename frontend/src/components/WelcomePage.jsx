@@ -10,7 +10,7 @@ function App() {
 
     const fetchQrCode = async (clientId) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/whatsapp/qr-code?clientId=${encodeURIComponent(clientId)}`);
+            const response = await fetch(`http://43.205.236.112:5000/api/whatsapp/qr-code?clientId=${encodeURIComponent(clientId)}`);
             const jsonData = await response.json();
             setQrCodeUrl(jsonData.qr_url);
         } catch (error) {
@@ -24,7 +24,7 @@ function App() {
 
             const checkReadyStatus = async () => {
                 try {
-                    const response = await fetch(`http://localhost:5000/api/whatsapp/status?clientId=${encodeURIComponent(user.name)}`);
+                    const response = await fetch(`http://43.205.236.112:5000/api/whatsapp/status?clientId=${encodeURIComponent(user.name)}`);
                     const jsonData = await response.json();
                     if (jsonData.isReady) {
                         setIsReady(true);
@@ -43,7 +43,7 @@ function App() {
 
     const handleLogout = async () => {
         try {
-            await fetch(`http://localhost:5000/api/whatsapp/logout?clientId=${encodeURIComponent(user.name)}`, { method: 'POST' });
+            await fetch(`http://43.205.236.112:5000/api/whatsapp/logout?clientId=${encodeURIComponent(user.name)}`, { method: 'POST' });
             setQrCodeUrl('');
             setIsReady(false);
             fetchQrCode(user.name);
@@ -68,7 +68,7 @@ function App() {
         formData.append('file', fileInput.files[0]);
 
         try {
-            const response = await fetch(`http://localhost:5000/api/whatsapp/upload?clientId=${encodeURIComponent(user.name)}`, {
+            const response = await fetch(`http://43.205.236.112:5000/api/whatsapp/upload?clientId=${encodeURIComponent(user.name)}`, {
                 method: 'POST',
                 body: formData,
                 headers: {
