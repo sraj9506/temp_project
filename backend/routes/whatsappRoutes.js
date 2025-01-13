@@ -63,15 +63,16 @@ const getClient = (clientId) => {
         client.senders[sid].step = 0;
       }
 
-      if(client.senders[sid].sessionId)
-      {
+      if (client.senders[sid].sessionId) {
         clearTimeout(client.senders[sid].sessionId);
+        client.senders[sid].sessionId = null;
       }
 
       client.senders[sid].sessionId = setTimeout(async () => {
         client.senders[sid].step = 0;
-        await message.reply("*Sorry!* \nBut your session has been expired!");
+        await message.reply("*Sorry!* \nBut your session has been expired.");
         clearTimeout(client.senders[sid].sessionId);
+        client.senders[sid].sessionId = null;
       }, 2 * 60 * 1000);
 
       if (
@@ -124,13 +125,14 @@ const getClient = (clientId) => {
             "*Great!* \nReply with *Your Mobile Number* to continue or *No* to exit."
           );
           client.senders[sid].step = 2;
-          client.senders[sid].attempt=3;
+          client.senders[sid].attempt = 3;
         } else if (client.senders[sid].attempt > 1) {
           client.senders[sid].attempt--;
           await message.reply(
             `*Invalid Mobile Number!* \n\n*Note:* Now you have only ${client.senders[sid].attempt} attempt left.`
           );
         } else {
+          client.senders[sid].step = 0;
           await message.reply(
             "*Sorry!* \nBut you are now blocked for *2* minutes."
           );
@@ -138,6 +140,7 @@ const getClient = (clientId) => {
           client.senders[sid].blockId = setTimeout(async () => {
             await message.reply("*Congratulations!* \nYou are now unblocked.");
             clearTimeout(client.senders[sid].blockId);
+            client.senders[sid].blockId = null;
           }, 2 * 60 * 1000);
         }
       } else if (client.senders[sid].step === 3) {
@@ -174,13 +177,14 @@ const getClient = (clientId) => {
             "*Great!* \nReply with *Your Mobile Number* to continue or *No* to exit."
           );
           client.senders[sid].step = 2;
-          client.senders[sid].attempt=3;
+          client.senders[sid].attempt = 3;
         } else if (client.senders[sid].attempt > 1) {
           client.senders[sid].attempt--;
           await message.reply(
             `*Invalid Date Of Birth!* \n\n*Note:* Now you have only ${client.senders[sid].attempt} attempt left.`
           );
         } else {
+          client.senders[sid].step = 0;
           await message.reply(
             "*Sorry!* \nBut you are now blocked for *2* minutes."
           );
@@ -188,6 +192,7 @@ const getClient = (clientId) => {
           client.senders[sid].blockId = setTimeout(async () => {
             await message.reply("*Congratulations!* \nYou are now unblocked.");
             clearTimeout(client.senders[sid].blockId);
+            client.senders[sid].blockId = null;
           }, 2 * 60 * 1000);
         }
       } else if (client.senders[sid].step === 4) {
@@ -253,6 +258,7 @@ const getClient = (clientId) => {
         }
       } else {
         clearTimeout(client.senders[sid].sessionId);
+        client.senders[sid].sessionId = null;
       }
     });
     client.initialize();
@@ -291,7 +297,7 @@ const fetchDataFromExcel = (clientId, mobile, birthdate, policy) => {
     const policyDetails = sheetData
       .filter((row) => row["Policy #"] === policy)
       .map((row) => {
-        const { Address,SN,...filteredRow } = row; // Exclude Address
+        const { Address, SN, ...filteredRow } = row; // Exclude Address
         return filteredRow;
       });
     return policyDetails;
