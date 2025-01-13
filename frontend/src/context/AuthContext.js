@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      const response = await axios.get('http://3.6.88.43:5000/api/auth/validate', {
+      const response = await axios.get('http://localhost:5000/api/auth/validate', {
         headers: { Authorization: `Bearer ${token}` },
       });
 

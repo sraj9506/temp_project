@@ -41,7 +41,7 @@ const VerifyOTP = () => {
     }
 
     try {
-      const res = await axios.post(`http://3.6.88.43:5000/api/auth/verify-otp`, { userId, otp });
+      const res = await axios.post(`http://localhost:5000/api/auth/verify-otp`, { userId, otp });
       alert(res.data.message);
       navigate('/signin'); // Redirect to login page
     } catch (error) {

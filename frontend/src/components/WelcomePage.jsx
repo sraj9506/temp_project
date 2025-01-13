@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';  // Make sure this is the correct import path
 
 function App() {
@@ -6,11 +6,11 @@ function App() {
     const [isReady, setIsReady] = useState(false);
     const [uploadMessage, setUploadMessage] = useState('');
     const [isUploading, setIsUploading] = useState(false);
-    const { user } = useAuth();  // Correct usage of useContext with AuthContext
+    const { user, token } = useAuth();  // Correct usage of useContext with AuthContext
 
     const fetchQrCode = async (clientId) => {
         try {
-            const response = await fetch(`http://3.6.88.43:5000/api/whatsapp/qr-code?clientId=${encodeURIComponent(clientId)}`);
+            const response = await fetch(`http://localhost:5000/api/whatsapp/qr-code?clientId=${encodeURIComponent(clientId)}`);
             const jsonData = await response.json();
             setQrCodeUrl(jsonData.qr_url);
         } catch (error) {
@@ -24,7 +24,7 @@ function App() {
 
             const checkReadyStatus = async () => {
                 try {
-                    const response = await fetch(`http://3.6.88.43:5000/api/whatsapp/status?clientId=${encodeURIComponent(user.name)}`);
+                    const response = await fetch(`http://localhost:5000/api/whatsapp/status?clientId=${encodeURIComponent(user.name)}`);
                     const jsonData = await response.json();
                     if (jsonData.isReady) {
                         setIsReady(true);
@@ -43,7 +43,7 @@ function App() {
 
     const handleLogout = async () => {
         try {
-            await fetch(`http://3.6.88.43:5000/api/whatsapp/logout?clientId=${encodeURIComponent(user.name)}`, { method: 'POST' });
+            await fetch(`http://localhost:5000/api/whatsapp/logout?clientId=${encodeURIComponent(user.name)}`, { method: 'POST' });
             setQrCodeUrl('');
             setIsReady(false);
             fetchQrCode(user.name);
@@ -68,9 +68,12 @@ function App() {
         formData.append('file', fileInput.files[0]);
 
         try {
-            const response = await fetch(`http://3.6.88.43:5000/api/whatsapp/upload?clientId=${encodeURIComponent(user.name)}`, {
+            const response = await fetch(`http://localhost:5000/api/whatsapp/upload?clientId=${encodeURIComponent(user.name)}`, {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
             });
 
             setUploadMessage(response.ok ? 'File uploaded successfully.' : 'Failed to upload file.');
